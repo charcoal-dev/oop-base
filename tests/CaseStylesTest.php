@@ -34,6 +34,10 @@ class CaseStylesTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals("charcol_dev", \Charcoal\OOP\CaseStyles::snake_case("charco@l_dev"));
         $this->assertEquals("charcoal_dev", \Charcoal\OOP\CaseStyles::snake_case("CharcoalDev"));
         $this->assertEquals("charcoal_dev", \Charcoal\OOP\CaseStyles::snake_case("charcoalDev "));
+        $this->assertEquals("charcoal_dev", \Charcoal\OOP\CaseStyles::snake_case("charcoal Dev "));
+        $this->assertEquals("charcoal_devtest", \Charcoal\OOP\CaseStyles::snake_case("charcoal Dev test"));
+        $this->assertEquals("charcoaldevtest", \Charcoal\OOP\CaseStyles::snake_case("charcoal dev test"));
+        $this->assertEquals("charcoal_dev_test", \Charcoal\OOP\CaseStyles::snake_case("CharcoalDevTest"));
         $this->assertEquals("charcoaldev", \Charcoal\OOP\CaseStyles::snake_case("Charcoaldev"));
 
         // PascalCase
