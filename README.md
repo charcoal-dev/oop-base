@@ -1,0 +1,1 @@
+## OOP Base for Charcoal Apps
