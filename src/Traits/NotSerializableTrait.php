@@ -19,7 +19,7 @@ namespace Charcoal\OOP\Traits;
  */
 trait NotSerializableTrait
 {
-    final public function __set_state(array $in): object
+    final public static function __set_state(array $in): object
     {
         throw new \BadMethodCallException(get_called_class() . ' instance cannot be exported');
     }
