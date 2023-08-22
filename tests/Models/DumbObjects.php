@@ -15,15 +15,29 @@
  */
 class DumbDatabase
 {
+    public array $tables = [];
+
     public function __construct(public readonly string $tag)
     {
     }
 
-    public function checkInTable(): mixed
+    public function storeInTable(string $table, object $user): void
     {
-        /** @noinspection PhpUnusedLocalVariableInspection */
-        $args = func_get_args();
-        throw new \OutOfBoundsException('No such value exists in database');
+        $this->tables[$table][] = $user;
+    }
+
+    public function checkInTable(string $table, string $col, int|string $value): object
+    {
+        $table = $this->tables[$table] ?? null;
+        if ($table) {
+            foreach ($table as $user) {
+                if ($user->$col === $value) {
+                    return $user;
+                }
+            }
+        }
+
+        throw new \RuntimeException('No such value exists in database');
     }
 }
 
@@ -32,22 +46,46 @@ class DumbDatabase
  */
 class DumbCache
 {
+    public array $storage = [];
+    public array $links = [];
+    public bool $debug = false;
+
     public function __construct(public readonly string $host, public readonly int $port)
     {
     }
 
     public function set(string $key, mixed $value): void
     {
+        $this->storage[$key] = serialize($value);
     }
 
     public function createReference(string $key, string $targetKey): void
     {
+        $this->links[$key] = $targetKey;
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
     public function get(string $key): mixed
     {
-        return null;
+        if (!isset($this->storage[$key])) {
+            if (isset($this->links[$key])) {
+                return $this->get($this->links[$key]);
+            }
+
+            return null;
+        }
+
+        return unserialize($this->storage[$key]);
+    }
+
+    public function returnKeys(): array
+    {
+        return array_keys($this->storage) + array_keys($this->links);
+    }
+
+    public function clear(): void
+    {
+        $this->storage = [];
+        $this->links = [];
     }
 }
 
@@ -74,9 +112,8 @@ class DumbUser
         public readonly int    $id,
         public bool            $status,
         public readonly string $username,
-        public string          $email,
-        public string          $firstName,
-        public string          $lastName,
+        public string          $country = "",
+        public string          $testTag = "",
     )
     {
     }
