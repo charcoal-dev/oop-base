@@ -34,6 +34,9 @@ class SingletonInstanceTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Charcoal', SingletonClassA::getInstance('Testing', 0)->name);
         $this->assertEquals(spl_object_id($obj2), spl_object_id(SingletonClassB::getInstance()));
         $this->assertEquals(spl_object_id($obj3), spl_object_id(SingletonClassC::getInstance(false)));
+        $this->assertNotEquals(spl_object_id($obj1a), spl_object_id($obj2));
+        $this->assertNotEquals(spl_object_id($obj2), spl_object_id($obj3));
+        $this->assertNotEquals(spl_object_id($obj3), spl_object_id($obj1b));
         $this->assertTrue(SingletonClassC::getInstance()->useCache);
     }
 }
