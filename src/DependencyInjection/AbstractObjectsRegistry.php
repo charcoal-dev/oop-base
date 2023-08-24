@@ -57,8 +57,6 @@ abstract class AbstractObjectsRegistry extends AbstractInstanceRegistry
 
     /**
      * This method is invoked internally and should not be called directly.
-     * This method replaces parent (AbstractDIResolver::store) method entirely.
-     * Unlike its parent, this method is designed to bind multiple keys to single instance.
      * @param object $object
      * @param array $opts
      * @return object
