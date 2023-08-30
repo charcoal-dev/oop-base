@@ -91,4 +91,13 @@ class CaseStyles
         // Return lowercase snake
         return strtolower($snake);
     }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    public static function snakeToCamel(string $name): string
+    {
+        return str_contains($name, "_") ? static::camelCase($name) : $name;
+    }
 }
