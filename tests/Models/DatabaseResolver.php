@@ -20,7 +20,7 @@ class DatabaseResolver extends \Charcoal\OOP\DependencyInjection\AbstractDIResol
     }
 
     // Intentionally kept "object" return type instead of "DumbDatabase" for unit tests
-    protected function resolve(string $key): object
+    protected function resolve(string $key, array $args): object
     {
         $class = DumbDatabase::class;
         if ($key === "problem") {
