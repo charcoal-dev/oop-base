@@ -23,22 +23,24 @@ abstract class AbstractDIResolver extends AbstractInstanceRegistry
     /**
      * Use this method to resolve requested instance.
      * @param string $key
+     * @param array $args
      * @return object
      */
-    abstract protected function resolve(string $key): object;
+    abstract protected function resolve(string $key, array $args): object;
 
     /**
      * Implementing classes should call this method to retrieve/resolve dependencies
      * @param string $key
+     * @param array $resolverArgs
      * @return object
      */
-    final protected function getOrResolve(string $key): object
+    final protected function getOrResolve(string $key, array $resolverArgs = []): object
     {
         if (isset($this->instances[$key])) {
             return $this->instances[$key];
         }
 
-        return $this->store($this->resolve($key), $key);
+        return $this->store($this->resolve($key, $resolverArgs), $key);
     }
 
     /**
