@@ -27,4 +27,14 @@ class StringVector extends AbstractVector
     {
         parent::__construct($values);
     }
+
+    /**
+     * @param string $value
+     * @return void
+     */
+    public function append(string $value): void
+    {
+        $this->values[] = $value;
+        $this->count++;
+    }
 }
