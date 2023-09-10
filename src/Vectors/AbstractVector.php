@@ -38,4 +38,9 @@ abstract class AbstractVector implements \IteratorAggregate, \Countable
     {
         return new \ArrayIterator($this->values);
     }
+
+    final public function getArray(): array
+    {
+        return $this->values;
+    }
 }

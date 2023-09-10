@@ -37,4 +37,12 @@ class StringVector extends AbstractVector
         $this->values[] = $value;
         $this->count++;
     }
+
+    /**
+     * @return $this
+     */
+    public function filterUnique(): static
+    {
+        return new static(...array_unique($this->values, SORT_STRING));
+    }
 }
