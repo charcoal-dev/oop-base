@@ -41,7 +41,7 @@ abstract class AbstractInstanceRegistry
      */
     protected function registrySet(string $key, object $instance): void
     {
-        if ($this->instanceOf && !is_a($instance, $this->instanceOf)) {
+        if (isset($this->instanceOf) && !is_a($instance, $this->instanceOf)) {
             throw $this->instanceTypeException($this->instanceOf, $instance);
         }
 
