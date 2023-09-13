@@ -35,13 +35,34 @@ abstract class AbstractInstanceRegistry
     }
 
     /**
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return [
+            "instanceOf" => $this->instanceOf,
+            "instances" => $this->instances,
+        ];
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->instanceOf = $data["instanceOf"];
+        $this->instances = $data["instances"];
+    }
+
+    /**
      * @param string $key
      * @param object $instance
      * @return void
      */
     protected function registrySet(string $key, object $instance): void
     {
-        if (isset($this->instanceOf) && !is_a($instance, $this->instanceOf)) {
+        if ($this->instanceOf && !is_a($instance, $this->instanceOf)) {
             throw $this->instanceTypeException($this->instanceOf, $instance);
         }
 
