@@ -30,12 +30,13 @@ class StringVector extends AbstractVector
 
     /**
      * @param string $value
-     * @return void
+     * @return $this
      */
-    public function append(string $value): void
+    public function append(string $value): static
     {
         $this->values[] = $value;
         $this->count++;
+        return $this;
     }
 
     /**
