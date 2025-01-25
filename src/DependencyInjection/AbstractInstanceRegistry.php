@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace Charcoal\OOP\DependencyInjection;
 
-use Charcoal\OOP\OOP;
-
 /**
  * Class AbstractInstanceRegistry
  * @package Charcoal\OOP\DependencyInjection
@@ -26,7 +24,7 @@ abstract class AbstractInstanceRegistry
     protected array $instances = [];
 
     /**
-     * @param string|null $instanceOf
+     * @param string|null $instanceOf Declares classname of objects this registry holds
      */
     protected function __construct(
         public readonly ?string $instanceOf = null
@@ -62,10 +60,6 @@ abstract class AbstractInstanceRegistry
      */
     protected function registrySet(string $key, object $instance): void
     {
-        if ($this->instanceOf && !is_a($instance, $this->instanceOf)) {
-            throw $this->instanceTypeException($this->instanceOf, $instance);
-        }
-
         $this->instances[$key] = $instance;
     }
 
@@ -85,21 +79,6 @@ abstract class AbstractInstanceRegistry
     protected function registryHas(string $key): bool
     {
         return array_key_exists($key, $this->instances);
-    }
-
-    /**
-     * @param string $instanceOf
-     * @param object $resolved
-     * @return \OutOfBoundsException
-     */
-    protected function instanceTypeException(string $instanceOf, object $resolved): \OutOfBoundsException
-    {
-        return new \OutOfBoundsException(sprintf(
-            '%s can only store instance of "%s", given "%s"',
-            OOP::baseClassName(static::class),
-            $instanceOf,
-            get_class($resolved)
-        ));
     }
 }
 
